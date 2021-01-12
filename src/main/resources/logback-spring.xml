@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+	
+	<!-- setup console log -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %highlight([%-5level]) --- [%thread] %logger{35} : %msg %n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- setup for writing log files -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>C:\sts-logs\logback-%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- register setup logs -->
+		<!-- mapper package -->
+	<logger name="tk.monsh.springbootpractice.mapper" level="TRACE" additivity="false">
+		<appender-ref ref="FILE"/>
+		<appender-ref ref="STDOUT"/>
+	</logger>
+		<!-- mapper package -->
+	
+	<logger name="tk.monsh.springbootpractice" level="DEBUG" additivity="false">
+		<appender-ref ref="FILE"/>
+		<appender-ref ref="STDOUT"/>
+	</logger>
+	
+	<root level="WARN">
+		<appender-ref ref="FILE"/>
+		<appender-ref ref="STDOUT"/>
+	</root>
+	<!-- register setup logs -->
+	
+</configuration>

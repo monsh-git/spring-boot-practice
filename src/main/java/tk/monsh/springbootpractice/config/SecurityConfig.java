@@ -57,12 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 			.logoutSuccessUrl("/")
 			.invalidateHttpSession(true)
-			.deleteCookies("JSESSIONID", "remeber-me")
+			.deleteCookies("JSESSIONID", "remember-me")
 			.and()
 		// remember me
 		.rememberMe()
 			.key("myWeb")
-			.rememberMeParameter("remeber-me")
+			.rememberMeParameter("remember-me")
 			.tokenValiditySeconds(86400)	// 1 day
 			.and()
 		// exceptionHandling

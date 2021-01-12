@@ -10,8 +10,8 @@ public class User implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	
 	private String username;	//u_id
-	private String password;		//u_password
-	private String uName;			//u_name
+	private String password;	//u_password
+	private String uName;		//u_name
 	private String uDateTime;	//u_datetime
 
 	// related to Security
@@ -58,36 +58,43 @@ public class User implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return null;
+		return authorities;
 	}
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return null;
+		return password;
 	}
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return null;
+		return username;
 	}
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return isAccountNonExpired;
 	}
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return false;
+		return isAccountNonLocked;
 	}
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return false;
+		return isCredentialsNonExpired;
 	}
 	@Override
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
-		return false;
+		return isEnabled;
+	}
+	@Override
+	public String toString() {
+		return "User [username=" + username + ", password=" + password + ", uName=" + uName + ", uDateTime=" + uDateTime
+				+ ", authorities=" + authorities + ", isAccountNonExpired=" + isAccountNonExpired
+				+ ", isAccountNonLocked=" + isAccountNonLocked + ", isCredentialsNonExpired=" + isCredentialsNonExpired
+				+ ", isEnabled=" + isEnabled + "]";
 	}
 }

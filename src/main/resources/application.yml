@@ -13,7 +13,7 @@ spring:
       prefix: "/WEB-INF/views"
       suffix: ".jsp"
 
-  datasource:    url: jdbc:mysql://localhost:3306/sbp_practice?characterEncoding=UTF-8&serverTimezone=UTC
+  datasource:    url: jdbc:mysql://localhost:3306/boot_practice?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -43,3 +43,6 @@ server:  port: 8080
 mybatis:
   type-aliases-package: tk.monsh.springbootpractice.domain
   mapper-locations: mapper/**/*.xml
+
+logging:
+  config: classpath:logback-spring.xml
