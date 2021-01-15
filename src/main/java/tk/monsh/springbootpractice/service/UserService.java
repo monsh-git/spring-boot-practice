@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import tk.monsh.springbootpractice.domain.User;
 
 public interface UserService extends UserDetailsService {
-
 	// Read user
 	public User readUser(String username);
 	

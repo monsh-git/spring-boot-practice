@@ -6,6 +6,6 @@
 						b_title as bTitle,
 						b_content as bContent,
 						b_writer as bWriter
-		FROM		sbp_board
+		FROM		board
 	</select>
 </mapper>

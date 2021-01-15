@@ -1,12 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ include file="./layouts/header.jsp" %>
+
 <h1>Sign-up</h1>
 <hr>
 
@@ -18,5 +13,5 @@
 	<input type="password" name="password" placeholder="Type password">
 	<button type="submit">Sign-up</button>
 </form>
-</body>
-</html>
+
+<%@ include file="./layouts/footer.jsp" %>

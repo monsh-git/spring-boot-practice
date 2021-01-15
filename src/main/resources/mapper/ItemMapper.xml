@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tk.monsh.springbootpractice.mapper.ItemMapper">
+
+<!-- Read items -->
+<select id="readItems" parameterType="String" resultType="Item">
+	SELECT		item_id				as itemId,
+					name				as name,
+					image				as image,
+					description			as description,
+					price				as price,
+					cost_price			as costPrice,
+    				stock				as stock,
+    				on_sale				as onSale,
+    				sold_out			as soldOut
+    FROM		item
+</select>
+
+<!-- Read item -->
+<select id="readItem" parameterType="Item" resultType="Item">
+	SELECT		item_id				as itemId,
+			    	name				as name,
+			    	image				as image,
+    				description			as description,
+    				price				as price,
+    				cost_price			as costPrice,
+    				stock				as stock,
+    				on_sale				as onSale,
+    				sold_out			as soldOut
+    FROM		item
+    WHERE		1=1
+    AND			item_id = #{itemId}
+</select>
+
+<!-- Add item -->
+<insert id="addItem" parameterType="Item">
+	INSERT INTO item (
+		item_id,
+		name,
+		image,
+		description,
+		price,
+		cost_price
+	) VALUES (
+		#{itemId},
+		#{name},
+		#{image},
+		#{description},
+		#{price},
+		#{costPrice}
+	)
+</insert>
+
+</mapper>
