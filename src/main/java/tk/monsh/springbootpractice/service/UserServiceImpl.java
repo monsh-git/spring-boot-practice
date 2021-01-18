@@ -27,18 +27,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User readUser(String username) {
-
-		return userMapper.readUser(username);
-	}
-
-	@Override
-	public void createUser(User user) {
-		userMapper.createUser(user);
-		
-	}
-
-	@Override
 	public void createAuthorities(User user) {
 		userMapper.createAuthority(user);		
 	}
@@ -49,6 +37,21 @@ public class UserServiceImpl implements UserService {
 		
 		return authorities;
 	}
+
+	@Override
+	public List<User> readUsers() {
+		return userMapper.readUsers();
+	}
 	
-	
+	@Override
+	public User readUser(String username) {
+
+		return userMapper.readUser(username);
+	}
+
+	@Override
+	public void createUser(User user) {
+		userMapper.createUser(user);
+		
+	}
 }

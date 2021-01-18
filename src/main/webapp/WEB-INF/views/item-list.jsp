@@ -17,8 +17,8 @@
 	</tr>
 	<c:forEach items="${item_list }" var="item">
 		<tr>
-			<td>${item.itemId}</td>
-			<td>${item.name}</td>
+			<td><a href="item?itemId=${item.itemId}">${item.itemId}</a></td>
+			<td><a href="item?itemId=${item.itemId}">${item.name}</a></td>
 			<td>${item.image}</td>
 			<td>${item.description}</td>
 			<td>${item.price}</td>
@@ -29,6 +29,12 @@
 		</tr>
 	</c:forEach>
 </table>
+<div class="col-md-11"></div>
+<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a class="btn btn-primary col-md-1" href="/add-item">Add Item</a>
+	</sec:authorize>
+</sec:authorize>
 </div>
 
 <%@ include file="./layouts/footer.jsp" %>

@@ -12,10 +12,10 @@
 		<h2>${principal}</h2>
 	</sec:authorize>
 	<sec:authorize access="isAuthenticated()">
-		<a class="btn btn-default" href="/user/info">My Info</a>
 		<sec:authorize access="hasRole('ROLE_ADMIN')">
-			<a class="btn btn-default" href="/before-add-item">Add Item</a>
+			<a class="btn btn-default" href="/user-list">User List</a>
 		</sec:authorize>
+		<a class="btn btn-default" href="/item-list">Item List</a>
 	</sec:authorize>
 </div>
 

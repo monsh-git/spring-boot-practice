@@ -3,7 +3,7 @@
 <%@ include file="./layouts/header.jsp" %>
 
 <div class="container">
-<form class="form-horizontal" action="/add-item" method="post">
+<form class="form-horizontal" action="/add-item-result" method="post">
   <%-- <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> --%>
   <div class="form-group">
     <label for="inputName3" class="col-sm-2 control-label">Item Name</label>
@@ -31,7 +31,7 @@
   </div>
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default">Register Item</button>
+      <button type="submit" class="btn btn-success">Register Item</button>
     </div>
   </div>
 </form>

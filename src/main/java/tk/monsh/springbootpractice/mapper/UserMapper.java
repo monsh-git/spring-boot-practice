@@ -9,15 +9,20 @@ import tk.monsh.springbootpractice.domain.User;
 
 @Mapper
 public interface UserMapper {
+
+	// Read authority
+	public List<GrantedAuthority> readAuthorities(String username);
+	
+	// Create authority
+	public void createAuthority(User user);
+	
+	// Read users
+	public List<User> readUsers();
+
 	// Read user
 	public User readUser(String username);
 	
 	// Create user
 	public void createUser(User user);
 	
-	// Read authority
-	public List<GrantedAuthority> readAuthorities(String username);
-	
-	// Create authority
-	public void createAuthority(User user);
 }

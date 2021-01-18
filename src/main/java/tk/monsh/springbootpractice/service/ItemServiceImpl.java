@@ -18,19 +18,19 @@ public class ItemServiceImpl implements ItemService {
 	List<Item> list = null;
 	
 	@Override
-	public List<Item> readItems() {
-		list = itemMapper.readItems();
-		
-		return list;
-	}
-	
-	@Override
 	public Item readItem(String itemId) {
 		item = itemMapper.readItem(itemId);
 		
 		return item;
 	}
 	
+	@Override
+	public List<Item> readItems() {
+		list = itemMapper.readItems();
+		
+		return list;
+	}
+
 	@Override
 	public void addItem(Item item) {
 		itemMapper.addItem(item);

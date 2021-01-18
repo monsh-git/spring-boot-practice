@@ -26,10 +26,7 @@ public class Controller {
 	@Autowired BoardService boardService;
 	@Autowired ItemService itemService;
 	@Autowired UserService userService;
-	
-	Item item = null;
-	List<Item> item_list = null;
-	
+		
 	@RequestMapping("/")
 	public String home(Model model) {
 		List<Board> list = boardService.selectBoardList();
@@ -54,10 +51,10 @@ public class Controller {
 		
 		// Set user data
 		user.setPassword(encodedPassword);
-		user.setAccountNonExpired(true);
-		user.setAccountNonLocked(true);
+		user.setIsAccountNonExpired(true);
+		user.setIsAccountNonLocked(true);
 		user.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER"));
-		user.setCredentialsNonExpired(true);
+		user.setIsCredentialsNonExpired(true);
 		user.setEnabled(true);
 		
 		// Create user
@@ -74,41 +71,71 @@ public class Controller {
 		return "/login";
 	}
 	
-	@Secured({"ROLE_ADMIN"})
-	@RequestMapping(value="/admin")
-	public String admin(Model model) {
-		return "/admin";
-	}
-	
-	@Secured({"ROLE_USER"})
-	@RequestMapping(value="/user/info")
-	public String userInfo(Model model) {		
-		return "/user_info";
-	}
-	
 	@RequestMapping(value="/denied")
 	public String denied(Model model) {
 		return "/denied";
 	}
 	
 	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/my-account")
+	public String userInfo(Model model) {
+		return "/my-account";
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value="/admin")
+	public String admin(Model model) {
+		return "/admin";
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value="/user-list")
+	public String readUsers(Model model) {
+		List<User> user_list = userService.readUsers();
+		model.addAttribute("user_list", user_list);
+		
+		return "/user-list";
+	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="user-info")
+	public String readUser(Model model, String username) {
+		
+		User user = userService.readUser(username);
+		model.addAttribute("user", user);
+		
+		return "/user-info";
+	}
+	
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value="/item-list")
 	public String readItems(Model model) {
-		item_list = itemService.readItems();
+		
+		List<Item> item_list = itemService.readItems();
 		model.addAttribute("item_list", item_list);
 		
 		return "/item-list";
 	}
 	
 	@Secured({"ROLE_USER"})
-	@RequestMapping("/before-add-item")
-	public String beforeAddItem() {
-		return "/add-item";
+	@RequestMapping(value="/item")
+	public String readItem(Model model, String itemId) {
+		
+		Item item = itemService.readItem(itemId);
+		model.addAttribute("item", item);
+		
+		return "/item";
 	}
 	
 	@Secured({"ROLE_USER"})
-	@RequestMapping(value="/add-item")
-	public String addItem(Item item, Model model) {
+	@RequestMapping("/add-item")
+	public String addItem() {
+		return "/add-item";
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value="/add-item-result")
+	public String addItemResult(Model model, Item item) {
 		// Set item data
 		Random random = new Random();
 		random.setSeed(System.currentTimeMillis());
@@ -121,9 +148,27 @@ public class Controller {
 		itemService.addItem(item);
 		
 		// Read the item just added
-		item = itemService.readItem(itemId);
-		model.addAttribute("item", item);
+		Item item_added = itemService.readItem(itemId);
+		model.addAttribute("item", item_added);
 		
 		return "/item";
 	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value="/edit-item")
+	public String editItem(Model model, String itemId) {
+		
+		Item item_edit = itemService.readItem(itemId);
+		model.addAttribute("item", item_edit);
+		
+		return "/edit-item";
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@RequestMapping(value="/edit-item-result")
+	public String editItemResult(Model model, Item item) {
+		
+		return "/item";
+	}
+	
 }

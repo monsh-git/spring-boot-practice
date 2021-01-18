@@ -28,7 +28,18 @@
 			<td>${item.soldOut}</td>
 		</tr>
 	</table>
-</sec:authorize>	
+</sec:authorize>
+<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a class="btn btn-default col-md-1" href="/item-list">Item List</a>
+	</sec:authorize>
+</sec:authorize>
+<div class="col-md-9"></div>
+<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<a class="btn btn-primary col-md-2" href="/edit-item?itemId=${item.itemId}">Edit This Item</a>
+	</sec:authorize>
+</sec:authorize>
 </div>
 
 <%@ include file="./layouts/footer.jsp" %>

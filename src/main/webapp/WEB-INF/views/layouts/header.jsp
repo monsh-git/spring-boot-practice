@@ -18,8 +18,9 @@
 <body>
 <div class="container">
 	<a class="btn btn-default col-md-1" href="/">Homepage</a>
-	<div class="col-md-10"></div>
+	<div class="col-md-9"></div>
 	<sec:authorize access="isAuthenticated()">
+		<a class="btn btn-default col-md-1" href="/my-account">My Account</a>
 		<a class="btn btn-default col-md-1 text-center" href="/logout">Logout</a>
 	</sec:authorize>
 </div>

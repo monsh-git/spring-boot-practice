@@ -26,23 +26,27 @@ public class User implements UserDetails {
 	private boolean isCredentialsNonExpired;
 	private boolean isEnabled;
 	
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getCreateDate() {
-		return createDate;
-	}
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public int getAge() {
 		return age;
@@ -62,42 +66,51 @@ public class User implements UserDetails {
 	public void setAddressId(int addressId) {
 		this.addressId = addressId;
 	}
+	public String getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
 	public String getLastUpdate() {
 		return lastUpdate;
 	}
 	public void setLastUpdate(String lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
-	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-		this.authorities = authorities;
-	}
-	public void setAccountNonExpired(boolean isAccountNonExpired) {
-		this.isAccountNonExpired = isAccountNonExpired;
-	}
-	public void setAccountNonLocked(boolean isAccountNonLocked) {
-		this.isAccountNonLocked = isAccountNonLocked;
-	}
-	public void setCredentialsNonExpired(boolean isCredentialsNonExpired) {
-		this.isCredentialsNonExpired = isCredentialsNonExpired;
-	}
-	public void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
 		return authorities;
 	}
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return password;
+	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
 	}
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return username;
+	public boolean getIsAccountNonExpired() {
+		return isAccountNonExpired;
 	}
+	public void setIsAccountNonExpired(boolean isAccountNonExpired) {
+		this.isAccountNonExpired = isAccountNonExpired;
+	}
+	public boolean getIsAccountNonLocked() {
+		return isAccountNonExpired;
+	}
+	public void setIsAccountNonLocked(boolean isAccountNonLocked) {
+		this.isAccountNonLocked = isAccountNonLocked;
+	}
+	public boolean getIsCredentialsNonExpired() {
+		return isCredentialsNonExpired;
+	}
+	public void setIsCredentialsNonExpired(boolean isCredentialsNonExpired) {
+		this.isCredentialsNonExpired = isCredentialsNonExpired;
+	}
+	public boolean getIsEnabled() {
+		return isEnabled;
+	}
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		// TODO Auto-generated method stub
@@ -118,6 +131,7 @@ public class User implements UserDetails {
 		// TODO Auto-generated method stub
 		return isEnabled;
 	}
+	
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", name=" + name + ", age=" + age + ", email="
