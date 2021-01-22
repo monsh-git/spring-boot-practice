@@ -16,4 +16,7 @@ public interface ItemMapper {
 	
 	// Add item
 	public void addItem(Item item);
+	
+	// Edit item
+	public void editItem(Item item);
 }

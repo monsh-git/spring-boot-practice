@@ -25,4 +25,6 @@ public interface UserMapper {
 	// Create user
 	public void createUser(User user);
 	
+	// Eidt user
+	public void editUser(User user);
 }

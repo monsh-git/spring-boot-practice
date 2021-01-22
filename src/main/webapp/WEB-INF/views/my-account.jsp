@@ -11,7 +11,7 @@
 			<th>Age</th>
 			<th>Email</th>
 			<th>Registration Date</th>
-			<th>Last Updat</th>
+			<th>Last Update</th>
 		</tr>
 		<tr>
 		<sec:authentication property="principal" var="principal"/>
@@ -23,7 +23,13 @@
 			<td>${principal.lastUpdate}</td>
 		</tr>
 	</table>
-</sec:authorize>	
+</sec:authorize>
+<div class="col-md-11"></div>
+<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="hasRole('ROLE_USER')">
+		<a class="btn btn-primary col-md-1" href="/edit-user?username=${principal.username}">Edit</a>
+	</sec:authorize>
+</sec:authorize>
 </div>
 
 <%@ include file="./layouts/footer.jsp" %>

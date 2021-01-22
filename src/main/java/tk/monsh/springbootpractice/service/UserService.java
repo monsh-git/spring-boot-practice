@@ -25,4 +25,6 @@ public interface UserService extends UserDetailsService {
 	// Create user
 	public void createUser(User user);
 	
+	// Edit user
+	public void editUser(User user);
 }

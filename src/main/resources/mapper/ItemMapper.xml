@@ -3,7 +3,7 @@
 <mapper namespace="tk.monsh.springbootpractice.mapper.ItemMapper">
 
 <!-- Read items -->
-<select id="readItems" parameterType="String" resultType="Item">
+<select id="readItems" resultType="Item">
 	SELECT		item_id				as itemId,
 					name				as name,
 					image				as image,
@@ -17,7 +17,7 @@
 </select>
 
 <!-- Read item -->
-<select id="readItem" parameterType="Item" resultType="Item">
+<select id="readItem" parameterType="String" resultType="Item">
 	SELECT		item_id				as itemId,
 			    	name				as name,
 			    	image				as image,
@@ -50,5 +50,18 @@
 		#{costPrice}
 	)
 </insert>
+
+<!-- Edit item -->
+<update id="editItem" parameterType="Item">
+	UPDATE	item
+	SET 	name = #{name},
+			description = #{description},
+			price = #{price},
+			cost_price = #{costPrice},
+			stock = #{stock},
+			on_sale = #{onSale},
+			sold_out = #{soldOut}
+	WHERE	item_id = #{itemId}
+</update>
 
 </mapper>

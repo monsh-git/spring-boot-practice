@@ -26,7 +26,7 @@
   <div class="form-group">
     <label for="inputCostPrice3" class="col-sm-2 control-label">Production Price</label>
     <div class="col-sm-8">
-      <input type="text" class="form-control" id="inputCostPrice3" name="cost_price" placeholder="Production Price">
+      <input type="text" class="form-control" id="inputCostPrice3" name="costPrice" placeholder="Production Price">
     </div>
   </div>
   <div class="form-group">

@@ -1,5 +1,6 @@
 package tk.monsh.springbootpractice.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Random;
 
@@ -8,15 +9,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import tk.monsh.springbootpractice.domain.Board;
 import tk.monsh.springbootpractice.domain.Item;
+import tk.monsh.springbootpractice.domain.Order;
 import tk.monsh.springbootpractice.domain.User;
 import tk.monsh.springbootpractice.service.BoardService;
 import tk.monsh.springbootpractice.service.ItemService;
+import tk.monsh.springbootpractice.service.OrderService;
 import tk.monsh.springbootpractice.service.UserService;
 
 @org.springframework.stereotype.Controller
@@ -26,7 +30,8 @@ public class Controller {
 	@Autowired BoardService boardService;
 	@Autowired ItemService itemService;
 	@Autowired UserService userService;
-		
+	@Autowired OrderService orderService;	
+	
 	@RequestMapping("/")
 	public String home(Model model) {
 		List<Board> list = boardService.selectBoardList();
@@ -91,8 +96,8 @@ public class Controller {
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/user-list")
 	public String readUsers(Model model) {
-		List<User> user_list = userService.readUsers();
-		model.addAttribute("user_list", user_list);
+		List<User> userList = userService.readUsers();
+		model.addAttribute("userList", userList);
 		
 		return "/user-list";
 	}
@@ -108,11 +113,38 @@ public class Controller {
 	}
 	
 	@Secured({"ROLE_USER"})
+	@RequestMapping(value="edit-user")
+	public String editUserForm(Model model, String username) {
+		
+		User userEdit = userService.readUser(username);
+		model.addAttribute("user", userEdit);
+		
+		return "/edit-user";
+	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="edit-user-result")
+	public String editUser(Model model, User user) {
+		
+		// Encode password
+		String encodedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+		// Set user data
+		user.setPassword(encodedPassword);
+		userService.editUser(user);
+		
+		// Read the item just edited
+		User userEdited = userService.readUser(user.getUsername());
+		model.addAttribute("user", userEdited);
+		
+		return "/user-info";
+	}
+	
+	@Secured({"ROLE_USER"})
 	@RequestMapping(value="/item-list")
 	public String readItems(Model model) {
 		
-		List<Item> item_list = itemService.readItems();
-		model.addAttribute("item_list", item_list);
+		List<Item> itemList = itemService.readItems();
+		model.addAttribute("itemList", itemList);
 		
 		return "/item-list";
 	}
@@ -129,18 +161,18 @@ public class Controller {
 	
 	@Secured({"ROLE_USER"})
 	@RequestMapping("/add-item")
-	public String addItem() {
+	public String addItemForm() {
 		return "/add-item";
 	}
 	
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/add-item-result")
-	public String addItemResult(Model model, Item item) {
+	public String addItem(Model model, Item item) {
 		// Set item data
 		Random random = new Random();
 		random.setSeed(System.currentTimeMillis());
 		String itemId = String.format("%08d", random.nextInt(99999999));
-		System.out.println(itemId);
+		// System.out.println(itemId);
 		item.setItemId(itemId);
 		item.setImage(null);
 		
@@ -156,19 +188,39 @@ public class Controller {
 	
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/edit-item")
-	public String editItem(Model model, String itemId) {
+	public String editItemForm(Model model, String itemId) {
 		
-		Item item_edit = itemService.readItem(itemId);
-		model.addAttribute("item", item_edit);
+		Item itemEdit = itemService.readItem(itemId);
+		model.addAttribute("item", itemEdit);
 		
 		return "/edit-item";
 	}
 	
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/edit-item-result")
-	public String editItemResult(Model model, Item item) {
+	public String editItem(Model model, Item item) {
+		
+		itemService.editItem(item);
+		
+		// Read the item just edited
+		Item itemEdited = itemService.readItem(item.getItemId());
+		model.addAttribute("item", itemEdited);
 		
 		return "/item";
 	}
 	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/add-to-cart")
+	public String addToCart(Model model, Principal principal, String itemId, int quantity) {
+		
+		String username = principal.getName();
+		
+		Order order = orderService.getOrder(username);
+		if(order == null) {
+			orderService.makeOrder(username);
+			order = orderService.getOrder(username);
+		}
+		
+		return "/cart";
+	}
 }

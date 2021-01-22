@@ -16,7 +16,7 @@
 		<th>Credential</th>
 		<th>Enable</th>
 	</tr>
-	<c:forEach items="${user_list}" var="user">
+	<c:forEach items="${userList}" var="user">
 		<tr>
 			<td><a href="user-info?username=${user.username}">${user.username}</a></td>
 			<td><a href="user-info?username=${user.username}">${user.name}</a></td>

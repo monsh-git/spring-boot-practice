@@ -9,7 +9,7 @@
 <!-- csrf -->
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 	<input type="text" name="username" placeholder="Type ID">
-	<input type="text" name="uName" placeholder="Type name">
+	<input type="text" name="name" placeholder="Type name">
 	<input type="password" name="password" placeholder="Type password">
 	<button type="submit">Sign-up</button>
 </form>

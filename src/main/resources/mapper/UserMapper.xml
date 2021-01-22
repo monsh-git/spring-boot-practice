@@ -66,7 +66,7 @@
 		name,
 		u_isAccountNonExpired,
 		u_isAccountNonLocked,
-		u_isCredentialNonExpired,
+		u_isCredentialsNonExpired,
 		u_isEnabled
 	) VALUES (
 		#{username},
@@ -78,5 +78,14 @@
 		#{isEnabled}
 	)
 </insert>
+
+<update id="editUser" parameterType="User">
+	UPDATE	user
+	SET		password = #{password},
+			name = #{name},
+			age = #{age},
+			email = #{email}
+	WHERE	user_id = #{username}
+</update>
 
 </mapper>

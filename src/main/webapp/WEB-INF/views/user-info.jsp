@@ -30,7 +30,13 @@
 			<td>${user.isEnabled}</td>
 		</tr>
 	</table>
-</sec:authorize>	
+</sec:authorize>
+<div class="col-md-11"></div>
+<sec:authorize access="isAuthenticated()">
+	<sec:authorize access="hasRole('ROLE_USER')">
+		<a class="btn btn-primary col-md-1" href="/edit-user?username=${user.username}">Edit</a>
+	</sec:authorize>
+</sec:authorize>
 </div>
 
 <%@ include file="./layouts/footer.jsp" %>
