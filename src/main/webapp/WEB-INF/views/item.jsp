@@ -7,11 +7,11 @@
 
 	<table class="table">
         <tr>
-            <td>
-                <img src="${path}/images/${item.image}" width="340" height="300">
+            <td style="width: 1024px;" align="center">
+                <img src="/images/${item.image}" width="auto" height="600">
             </td>
             <td>
-                <table style="height: 300px; width: 400px;">
+                <table style="height: 600px; width: 400px;">
                     <tr align="center">
                         <td><h3>${item.name}</h3></td>
                     </tr>

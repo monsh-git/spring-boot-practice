@@ -9,4 +9,7 @@ public interface OrderService {
 	
 	// Make an order
 	public void makeOrder(String username);
+	
+	// Get the total amount of an order
+	public int getTotalAmount(int orderId);
 }

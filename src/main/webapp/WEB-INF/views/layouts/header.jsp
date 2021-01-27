@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- The latest CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- An Additional Theme -->
@@ -20,8 +21,9 @@
 <body>
 <div class="container">
 	<a class="btn btn-default col-md-1" href="/">Homepage</a>
-	<div class="col-md-9"></div>
+	<div class="col-md-8"></div>
 	<sec:authorize access="isAuthenticated()">
+		<a class="btn btn-primary col-md-1" href="/cart">Cart</a>
 		<a class="btn btn-default col-md-1" href="/my-account">My Account</a>
 		<a class="btn btn-default col-md-1 text-center" href="/logout">Logout</a>
 	</sec:authorize>

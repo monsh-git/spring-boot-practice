@@ -7,6 +7,7 @@ public class Item {
     // item name 
     private String name;
     private String image;
+    private String thumbnail;
     // item description 
     private String description;
     // selling price 
@@ -41,6 +42,14 @@ public class Item {
         this.image = image;
     }
 
+    public String getThumbnail() {
+    	return thumbnail;
+    }
+    
+    public void setThumbnail(String thumbnail) {
+    	this.thumbnail = thumbnail;
+    }
+    
     public String getDescription() {
         return description;
     }

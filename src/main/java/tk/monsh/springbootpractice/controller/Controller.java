@@ -1,9 +1,19 @@
 package tk.monsh.springbootpractice.controller;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.Principal;
 import java.util.List;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+import javax.swing.filechooser.FileSystemView;
+
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +23,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import tk.monsh.springbootpractice.domain.Board;
 import tk.monsh.springbootpractice.domain.Item;
 import tk.monsh.springbootpractice.domain.Order;
+import tk.monsh.springbootpractice.domain.OrderDetail;
 import tk.monsh.springbootpractice.domain.User;
 import tk.monsh.springbootpractice.service.BoardService;
 import tk.monsh.springbootpractice.service.ItemService;
+import tk.monsh.springbootpractice.service.OrderDetailService;
 import tk.monsh.springbootpractice.service.OrderService;
 import tk.monsh.springbootpractice.service.UserService;
 
@@ -30,7 +44,8 @@ public class Controller {
 	@Autowired BoardService boardService;
 	@Autowired ItemService itemService;
 	@Autowired UserService userService;
-	@Autowired OrderService orderService;	
+	@Autowired OrderService orderService;
+	@Autowired OrderDetailService orderDetailService;
 	
 	@RequestMapping("/")
 	public String home(Model model) {
@@ -167,14 +182,47 @@ public class Controller {
 	
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/add-item-result")
-	public String addItem(Model model, Item item) {
+	public String addItem(Model model, Item item, @RequestParam("imageFile") MultipartFile multipartFile) {
+
 		// Set item data
+		String path = "D:/SpringToolWorkspace/SpringBootPractice/src/main/resources/static/images/";
+		String thumbPath = path + "thumb/";
+		String filename = multipartFile.getOriginalFilename();
+		String ext = filename.substring(filename.lastIndexOf(".")+1);
+		
 		Random random = new Random();
 		random.setSeed(System.currentTimeMillis());
-		String itemId = String.format("%08d", random.nextInt(99999999));
+		String now = String.format("%08d", random.nextInt(99999999));
+		String itemId = now;
+		
+		filename = filename + now;
+		File file = new File(path + filename);
+		File thumbFile = new File(thumbPath + filename);
+		
+		try {
+			InputStream input = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(input, file);
+			
+			BufferedImage imageBuf = ImageIO.read(file);
+			int fixWidth = 500;
+			double ratio = imageBuf.getWidth() / (double)fixWidth;
+			int thumbWidth = fixWidth;
+			int thumbHeight = (int)(imageBuf.getHeight() / ratio);
+			BufferedImage thumbImageBf = new BufferedImage(thumbWidth, thumbHeight, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D g = thumbImageBf.createGraphics();
+			Image thumbImage = imageBuf.getScaledInstance(thumbWidth, thumbHeight, Image.SCALE_SMOOTH);
+			g.drawImage(thumbImage, 0,  0,  thumbWidth,  thumbHeight,  null);
+			g.dispose();
+			ImageIO.write(thumbImageBf, ext, thumbFile);
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(file);
+			e.printStackTrace();
+		}
+				
 		// System.out.println(itemId);
 		item.setItemId(itemId);
-		item.setImage(null);
+		item.setImage(filename);
+		item.setThumbnail("thumb/" + filename);
 		
 		// Add the item
 		itemService.addItem(item);
@@ -198,7 +246,43 @@ public class Controller {
 	
 	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(value="/edit-item-result")
-	public String editItem(Model model, Item item) {
+	public String editItem(Model model, Item item, @RequestParam("imageFile") MultipartFile multipartFile) {
+		
+		String path = "D:/SpringToolWorkspace/SpringBootPractice/src/main/resources/static/images/";
+		String thumbPath = path + "thumb/";
+		String filename = multipartFile.getOriginalFilename();
+		String ext = filename.substring(filename.lastIndexOf(".")+1);
+
+		Random random = new Random();
+		random.setSeed(System.currentTimeMillis());
+		String now = String.format("%08d", random.nextInt(99999999));
+		
+		filename = filename + now;		
+		File file = new File(path + filename);
+		File thumbFile = new File(thumbPath + filename);
+		
+		try {
+			InputStream input = multipartFile.getInputStream();
+			FileUtils.copyInputStreamToFile(input, file);
+			
+			BufferedImage imageBuf = ImageIO.read(file);
+			int fixWidth = 500;
+			double ratio = imageBuf.getWidth() / (double)fixWidth;
+			int thumbWidth = fixWidth;
+			int thumbHeight = (int)(imageBuf.getHeight() / ratio);
+			BufferedImage thumbImageBf = new BufferedImage(thumbWidth, thumbHeight, BufferedImage.TYPE_3BYTE_BGR);
+			Graphics2D g = thumbImageBf.createGraphics();
+			Image thumbImage = imageBuf.getScaledInstance(thumbWidth, thumbHeight, Image.SCALE_SMOOTH);
+			g.drawImage(thumbImage, 0,  0,  thumbWidth,  thumbHeight,  null);
+			g.dispose();
+			ImageIO.write(thumbImageBf, ext, thumbFile);
+		} catch (IOException e) {
+			FileUtils.deleteQuietly(file);
+			e.printStackTrace();
+		}
+				
+		item.setImage(filename);
+		item.setThumbnail("thumb/" + filename);
 		
 		itemService.editItem(item);
 		
@@ -220,6 +304,35 @@ public class Controller {
 			orderService.makeOrder(username);
 			order = orderService.getOrder(username);
 		}
+		int orderId = order.getOrderId();
+			
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setOrderId(orderId);
+		orderDetail.setItemId(itemId);
+		orderDetail.setQuantity(quantity);
+		
+		orderDetailService.makeOrderDetail(orderDetail);
+		List<OrderDetail> orderDetailList = orderDetailService.getOrderDetails(orderId);
+		model.addAttribute("orderDetailList", orderDetailList);
+		
+		return "/cart";
+	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/cart")
+	public String viewCart(Model model, Principal principal) {
+		
+		String username = principal.getName();
+		Order order = orderService.getOrder(username);
+		if(order == null) {
+			orderService.makeOrder(username);
+			order = orderService.getOrder(username);
+		}
+		int orderId = order.getOrderId();
+		order.setTotalAmount(orderService.getTotalAmount(orderId));
+		List<OrderDetail> orderDetailList = orderDetailService.getOrderDetails(orderId);
+		model.addAttribute("orderDetailList", orderDetailList);
+		model.addAttribute("order", order);
 		
 		return "/cart";
 	}

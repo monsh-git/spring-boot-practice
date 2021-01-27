@@ -19,7 +19,7 @@
 		<tr>
 			<td><a href="item?itemId=${item.itemId}">${item.itemId}</a></td>
 			<td><a href="item?itemId=${item.itemId}">${item.name}</a></td>
-			<td>${item.image}</td>
+			<td align="center"><img src="/images/${item.thumbnail}" height="200"></td>
 			<td>${item.description}</td>
 			<td>${item.price}</td>
 			<td>${item.costPrice}</td>

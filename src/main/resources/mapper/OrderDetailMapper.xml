@@ -2,15 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tk.monsh.springbootpractice.mapper.OrderDetailMapper">
 
-<!-- Make an order -->
-<insert id="makeOrder">
-	INSERT INTO order_detail (
+<!-- Get orderDetails -->
+<resultMap type="tk.monsh.springbootpractice.domain.Order" id="orderMap">
+	<id column="order_id" property="orderId" />
+	<id column="user_id" property="userId" />
+	<id column="total_amount" property="totalAmount" />
+	<id column="order_date" property="orderDate" />
+	<id column="is_purchased" property="isPurchased" />
+</resultMap>
+<resultMap type="tk.monsh.springbootpractice.domain.Item" id="itemMap">
+	<id column="item_id" property="itemId" />
+	<id column="name" property="name" />
+	<id column="image" property="image" />
+	<id column="thumbnail" property="thumbnail" />
+	<id column="description" property="description" />
+	<id column="price" property="price" />
+</resultMap>
+<resultMap type="tk.monsh.springbootpractice.domain.OrderDetail" id="orderDetailMap">
+	<result column="order_id" property="orderId" />
+	<result column="item_id" property="itemId" />
+	<result column="quantity" property="quantity" />
+	<collection resultMap="orderMap" property="order" />
+	<collection resultMap="itemMap" property="item" />
+</resultMap>
+<select id="getOrderDetails" resultMap="orderDetailMap">
+	SELECT		*
+	FROM		`order` ta
+	LEFT JOIN	order_detail tb		ON	ta.order_id = tb.order_id
+	LEFT JOIN	item tc				ON	tb.item_id = tc.item_id
+	WHERE		ta.order_id = #{orderId}
+</select>
+
+<!-- Make an orderDetail -->
+<insert id="makeOrderDetail" parameterType="OrderDetail">
+	INSERT INTO `order_detail` (
 		order_id,
-		item_id
+		item_id,
 		quantity
 	) VALUES (
-		#{order_id},
-		#{item_id},
+		#{orderId},
+		#{itemId},
 		#{quantity}
 	)
 </insert>

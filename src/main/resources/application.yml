@@ -25,6 +25,8 @@ spring:
     jdbc:
       initialize-schema: always
 
+  servlet:    multipart:      enabled: true
+
 server:  port: 8080
   tomcat:    uri-encoding: UTF-8
     

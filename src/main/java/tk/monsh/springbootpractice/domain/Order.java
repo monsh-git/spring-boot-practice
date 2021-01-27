@@ -3,6 +3,7 @@ package tk.monsh.springbootpractice.domain;
 public class Order {
 	private int orderId;
 	private String userId;
+	private int totalAmount;
 	private String orderDate;
 	private boolean isPurchased;
 	
@@ -17,6 +18,12 @@ public class Order {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public int getTotalAmount() {
+		return totalAmount;
+	}
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 	public String getOrderDate() {
 		return orderDate;

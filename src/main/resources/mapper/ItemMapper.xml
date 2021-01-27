@@ -7,6 +7,7 @@
 	SELECT		item_id				as itemId,
 					name				as name,
 					image				as image,
+					thumbnail			as thumbnail,
 					description			as description,
 					price				as price,
 					cost_price			as costPrice,
@@ -21,6 +22,7 @@
 	SELECT		item_id				as itemId,
 			    	name				as name,
 			    	image				as image,
+					thumbnail			as thumbnail,
     				description			as description,
     				price				as price,
     				cost_price			as costPrice,
@@ -38,6 +40,7 @@
 		item_id,
 		name,
 		image,
+		thumbnail,
 		description,
 		price,
 		cost_price
@@ -45,6 +48,7 @@
 		#{itemId},
 		#{name},
 		#{image},
+		#{thumbnail},
 		#{description},
 		#{price},
 		#{costPrice}
@@ -55,6 +59,8 @@
 <update id="editItem" parameterType="Item">
 	UPDATE	item
 	SET 	name = #{name},
+			image = #{image},
+			thumbnail = #{thumbnail},
 			description = #{description},
 			price = #{price},
 			cost_price = #{costPrice},

@@ -23,4 +23,11 @@ public class OrderServiceImpl implements OrderService {
 	public void makeOrder(String username) {
 		orderMapper.makeOrder(username);
 	}
+	
+	@Override
+	public int getTotalAmount(int orderId) {
+		int totalAmount = orderMapper.getTotalAmount(orderId);
+		
+		return totalAmount;
+	}
 }

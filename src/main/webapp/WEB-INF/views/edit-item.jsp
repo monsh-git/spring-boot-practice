@@ -4,7 +4,7 @@
 
 <div class="container">
 <sec:authorize access="isAuthenticated()">
-	<form class="form-horizontal" action="/edit-item-result" method="post">
+	<form class="form-horizontal" action="/edit-item-result" method="post" enctype="multipart/form-data">
 		<div class="form-group">
 		    <label for="inputId3" class="col-sm-2 control-label">Item Code</label>
 		    <div class="col-sm-8">
@@ -16,6 +16,24 @@
 		    <div class="col-sm-8">
 		      <input type="text" class="form-control" id="inputname3" name="name" value="${item.name}">
 		    </div>
+		</div>
+		<div class="form-group">
+		  	<label for="inputImage3" class="col-sm-2 control-label">Image</label>
+		  	<div class="col-sm-8">
+			  	<input type="file" id="inputImage3" name="imageFile" />
+			  	<div class="select_img"><img src="/images/${item.image}" /></div>
+			  	<script>
+			  		$("#inputImage3").change(function(){
+			  			if(this.files && this.files[0]) {
+			  				var reader = new FileReader;
+			  				reader.onload = function(data) {
+			  					$(".select_img img").attr("src", data.target.result).width(500);
+			  				}
+			  				reader.readAsDataURL(this.files[0]);
+			  			}
+			  		});
+			  	</script>
+			</div>
 		</div>
 		<div class="form-group">
 		    <label for="inputDescription3" class="col-sm-2 control-label">Description</label>
@@ -65,12 +83,20 @@
 			        <label>
 			        	<c:choose>
 				        	<c:when test="${item.soldOut == true}">
-				        		<input type="checkbox" id="inputSoldOut" name="soldOut" checked>
+				        		<input type="checkbox" id="inputSoldOut" name="soldOutVisible" checked>
 				        	</c:when>
 				        	<c:when test="${item.soldOut != true}">
-				        		<input type="checkbox" id="inputSoldOut" name="soldOut">
+				        		<input type="checkbox" id="inputSoldOut" name="soldOutVisible">
 				        	</c:when>
 				        </c:choose>
+				        <input type="hidden" name="soldOut" />
+		        		<script>
+					        if ($('input[name=soldOut]').is(":checked")) {
+								$('input[name=soldOut]').val(1);
+					        } else {
+					            $('input[name=soldOut]').val(0);
+					        }
+						</script>
 			        </label>
 			    </div>
 			</div>

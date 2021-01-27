@@ -11,12 +11,12 @@ public interface ItemMapper {
 	// Read items
 	public List<Item> readItems();
 
-	// Read item
+	// Read an item
 	public Item readItem(String itemId);
 	
-	// Add item
+	// Add an item
 	public void addItem(Item item);
 	
-	// Edit item
+	// Edit an item
 	public void editItem(Item item);
 }
