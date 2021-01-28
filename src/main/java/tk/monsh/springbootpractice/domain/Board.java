@@ -1,40 +1,40 @@
 package tk.monsh.springbootpractice.domain;
 
 public class Board {
-	private int bId;
-	private String bTitle;
-	private String bContent;
-	private String bWriter;
-	private String bDateTime;
+	private int boardId;
+	private String itemId;
+	private String userId;
+	private String content;
+	private String datetime;
 	
-	public int getbId() {
-		return bId;
+	public int getBoardId() {
+		return boardId;
 	}
-	public void setbId(int bId) {
-		this.bId = bId;
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
 	}
-	public String getbTitle() {
-		return bTitle;
+	public String getItemId() {
+		return itemId;
 	}
-	public void setbTitle(String bTitle) {
-		this.bTitle = bTitle;
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
 	}
-	public String getbContent() {
-		return bContent;
+	public String getUserId() {
+		return userId;
 	}
-	public void setbContent(String bContent) {
-		this.bContent = bContent;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getbWriter() {
-		return bWriter;
+	public String getContent() {
+		return content;
 	}
-	public void setbWriter(String bWriter) {
-		this.bWriter = bWriter;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public String getbDateTime() {
-		return bDateTime;
+	public String getDatetime() {
+		return datetime;
 	}
-	public void setbDateTime(String bDateTime) {
-		this.bDateTime = bDateTime;
+	public void setDatetime(String datetime) {
+		this.datetime = datetime;
 	}
 }

@@ -10,6 +10,7 @@
 	FROM		`order`
 	WHERE		1=1
 	AND			user_id = #{username}
+	AND			is_purchased != 1
 </select>
 
 <insert id="makeOrder" parameterType="String">
@@ -31,5 +32,11 @@
 				) ta
 	WHERE		ta.order_id = #{orderId}
 </select>
+
+<update id="setPurchased" parameterType="int">
+	UPDATE	`order`
+	SET		is_purchased = 1
+	WHERE	order_id = #{orderId}
+</update>
 
 </mapper>

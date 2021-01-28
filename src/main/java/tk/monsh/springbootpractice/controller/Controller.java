@@ -49,8 +49,8 @@ public class Controller {
 	
 	@RequestMapping("/")
 	public String home(Model model) {
-		List<Board> list = boardService.selectBoardList();
-		model.addAttribute("list", list);
+		List<Item> itemList = itemService.readItems();
+		model.addAttribute("itemList", itemList);
 		
 		logger.debug("debug");
 		logger.info("info");
@@ -171,6 +171,9 @@ public class Controller {
 		Item item = itemService.readItem(itemId);
 		model.addAttribute("item", item);
 		
+		List<Board> boardList = boardService.getBoards(itemId);
+		model.addAttribute("boardList", boardList);
+		
 		return "/item";
 	}
 	
@@ -195,7 +198,7 @@ public class Controller {
 		String now = String.format("%08d", random.nextInt(99999999));
 		String itemId = now;
 		
-		filename = filename + now;
+		filename = "IMG" + now;
 		File file = new File(path + filename);
 		File thumbFile = new File(thumbPath + filename);
 		
@@ -257,7 +260,7 @@ public class Controller {
 		random.setSeed(System.currentTimeMillis());
 		String now = String.format("%08d", random.nextInt(99999999));
 		
-		filename = filename + now;		
+		filename = "IMG" + now;		
 		File file = new File(path + filename);
 		File thumbFile = new File(thumbPath + filename);
 		
@@ -330,10 +333,31 @@ public class Controller {
 		}
 		int orderId = order.getOrderId();
 		order.setTotalAmount(orderService.getTotalAmount(orderId));
-		List<OrderDetail> orderDetailList = orderDetailService.getOrderDetails(orderId);
-		model.addAttribute("orderDetailList", orderDetailList);
-		model.addAttribute("order", order);
+		if(order.isPurchased() != true) {
+			List<OrderDetail> orderDetailList = orderDetailService.getOrderDetails(orderId);
+			model.addAttribute("orderId", orderId);
+			model.addAttribute("order", order);
+			model.addAttribute("orderDetailList", orderDetailList);
+		}
 		
 		return "/cart";
+	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/purchase-result")
+	public String purchaseResult(Model model, int orderId) {
+		List<OrderDetail> orderDetailList = orderDetailService.getOrderDetails(orderId);
+		orderService.setPurchased(orderId);
+		
+		for(OrderDetail orderDetail : orderDetailList) {
+			Item item = itemService.readItem(orderDetail.getItemId());
+			item.setStock(item.getStock() - orderDetail.getQuantity());
+			if(item.getStock() == 0) {
+				item.setSoldOut(true);
+			}
+			itemService.editItem(item);
+		}
+		
+		return "/purchase-result";
 	}
 }

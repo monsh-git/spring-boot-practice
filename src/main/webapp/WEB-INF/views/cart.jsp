@@ -28,7 +28,7 @@
 	            </td>
 	        </tr>
 		</c:forEach>
-		<tr>
+		<tr class="cartBottom">
 			<td class="col-md-8" align="right">
 				<h3>Total Amount</h3>
 			</td>
@@ -36,15 +36,28 @@
 				<h5>${order.totalAmount}</h5>
 			</td>
 		</tr>
-		<tr>
+		<tr class="cartBottom">
 			<td>
 			</td>
 			<td>
-				<h5>Purchase</h5>
+				<form action="/purchase-result" method="post">
+					<input type="hidden" name="orderId" value="${orderId}">
+					<button type="submit" class="btn btn-primary">Purchase</button>
+				</form>
 			</td>
 		</tr>
     </table>
 </sec:authorize>
 </div>
+
+<script>
+	$(function(){
+		var orderId = "${orderId}";
+				
+		if (orderId == ""){
+			$(".cartBottom").children().css("display", "none");
+		}
+	});
+</script>
 
 <%@ include file="./layouts/footer.jsp" %>

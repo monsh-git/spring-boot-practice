@@ -9,5 +9,5 @@ import tk.monsh.springbootpractice.domain.Board;
 @Mapper
 public interface BoardMapper {
 	
-	public List<Board> selectBoardList();
+	public List<Board> getBoards(String itemId);
 }

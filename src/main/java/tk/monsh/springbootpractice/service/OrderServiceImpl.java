@@ -30,4 +30,9 @@ public class OrderServiceImpl implements OrderService {
 		
 		return totalAmount;
 	}
+	
+	@Override
+	public void setPurchased(int orderId) {
+		orderMapper.setPurchased(orderId);
+	}
 }

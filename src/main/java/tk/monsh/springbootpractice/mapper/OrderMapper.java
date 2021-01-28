@@ -15,4 +15,7 @@ public interface OrderMapper {
 	
 	// Get the total amount of an order
 	public int getTotalAmount(int orderId);
+	
+	// Set purchased
+	public void setPurchased(int orderId);
 }

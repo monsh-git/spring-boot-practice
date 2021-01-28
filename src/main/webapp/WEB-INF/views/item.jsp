@@ -3,7 +3,6 @@
 <%@ include file="./layouts/header.jsp" %>
 
 <div class="container">
-<sec:authorize access="isAuthenticated()">
 
 	<table class="table">
         <tr>
@@ -38,6 +37,25 @@
             </td>
         </tr>
     </table>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+	    <table class="table">
+			<tr>
+				<th class="text-center">ID</th>
+				<th class="text-center">Content</th>
+				<th class="text-center">Date</th>
+			</tr>
+			<c:forEach items="${boardList}" var="board" varStatus="status">
+			<tr>
+				<td class="text-center">${board.userId}</td>
+				<td class="text-center">${board.content}</td>
+				<td class="text-center">${board.datetime}</td>
+			</tr>
+			</c:forEach>
+		</table>
+    </div>
+    <div class="col-md-2"></div>
+    
 	<!-- Bottom button area -->
 	<sec:authorize access="hasRole('ROLE_USER')">
 		<a class="btn btn-default col-md-1" href="/item-list">Item List</a>
@@ -46,7 +64,7 @@
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<a class="btn btn-primary col-md-2" href="/edit-item?itemId=${item.itemId}">Edit This Item</a>
 	</sec:authorize>
-</sec:authorize>
+
 </div>
 
 <%@ include file="./layouts/footer.jsp" %>

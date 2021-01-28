@@ -18,7 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${page_title}</title>
 </head>
-<body>
+<body onload="javascript:window_onload()">
 <div class="container">
 	<a class="btn btn-default col-md-1" href="/">Homepage</a>
 	<div class="col-md-8"></div>
