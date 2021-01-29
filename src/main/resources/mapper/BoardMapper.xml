@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tk.monsh.springbootpractice.mapper.BoardMapper">
-	<select id="getBoards" resultType="Board">
-		SELECT	user_id		as userId,
+
+<select id="getBoards" resultType="Board">
+	SELECT		user_id		as userId,
 				content		as content,
 				datetime	as datetime
-		FROM	board
-		WHERE	1=1
-		AND		item_id = #{itemId}
-	</select>
+	FROM		board
+	WHERE		1=1
+	AND			item_id = #{itemId}
+	ORDER BY	datetime DESC
+</select>
+
+<select id="getBoard" resultType="Board">
+	SELECT		board_id	as boardId,
+				item_id		as itemId,
+				user_id		as userId,
+				content		as content,
+				datetime	as datetime
+	FROM		board
+	WHERE		1=1
+	AND			board_id = #{boardId}
+</select>
+
+<insert id="createBoard" parameterType="Board">
+	INSERT INTO board (
+		item_id,
+		user_id,
+		content
+	) VALUES (
+		#{itemId},
+		#{userId},
+		#{content}
+	)
+</insert>
+
+<update id="updateBoard" parameterType="Board">
+	UPDATE	board
+	SET		content = #{content}
+	WHERE	board_id = #{boardId}
+</update>
+
 </mapper>

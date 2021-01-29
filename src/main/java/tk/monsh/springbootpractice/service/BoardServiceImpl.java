@@ -11,10 +11,25 @@ import tk.monsh.springbootpractice.mapper.BoardMapper;
 @Service("BoardServiceImpl")
 public class BoardServiceImpl implements BoardService {
 	
-	@Autowired BoardMapper boardmapper;
+	@Autowired BoardMapper boardMapper;
 	
 	@Override
 	public List<Board> getBoards(String itemId) {
-		return boardmapper.getBoards(itemId);
+		return boardMapper.getBoards(itemId);
+	}
+	
+	@Override
+	public Board getBoard(int boardId) {
+		return boardMapper.getBoard(boardId);
+	}
+	
+	@Override
+	public void createBoard(Board board) {
+		boardMapper.createBoard(board);
+	}
+	
+	@Override
+	public void updateBoard(Board board) {
+		boardMapper.updateBoard(board);
 	}
 }

@@ -10,4 +10,7 @@ import tk.monsh.springbootpractice.domain.Board;
 public interface BoardMapper {
 	
 	public List<Board> getBoards(String itemId);
+	public Board getBoard(int boardId);
+	public void createBoard(Board board);
+	public void updateBoard(Board board);
 }

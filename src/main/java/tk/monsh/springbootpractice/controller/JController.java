@@ -21,6 +21,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,8 +38,8 @@ import tk.monsh.springbootpractice.service.OrderDetailService;
 import tk.monsh.springbootpractice.service.OrderService;
 import tk.monsh.springbootpractice.service.UserService;
 
-@org.springframework.stereotype.Controller
-public class Controller {
+@Controller
+public class JController {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired BoardService boardService;
@@ -295,6 +296,46 @@ public class Controller {
 		
 		return "/item";
 	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/create-review")
+	public String createReview(Model model, Principal principal, String itemId, Board board) {
+		
+		String username = principal.getName();
+		board.setUserId(username);
+		
+		boardService.createBoard(board);		
+		
+		List<Board> boardList = boardService.getBoards(itemId);
+		model.addAttribute("boardList", boardList);
+		
+		return "/review-list";
+	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/update-review")
+	public String updateReviewForm(Model model, Principal principal, Board board) {
+		
+		System.out.println(board.getBoardId());
+		
+		
+		if(board.getUserId() != principal.getName()) {
+			return "no-authority";
+		}
+		
+		model.addAttribute("board", board);
+		return "update-review";		
+	}
+	
+	@Secured({"ROLE_USER"})
+	@RequestMapping(value="/update-review-result")
+	public String updateReview(Model model, Board board) {
+		
+		boardService.updateBoard(board);
+				
+		return "/review-list";
+	}
+	
 	
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value="/add-to-cart")
