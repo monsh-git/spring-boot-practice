@@ -5,7 +5,11 @@
 <div class="container">
 <table class="table table-striped">
 	<tr>
+		<sec:authorize access="isAuthenticated()">
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
 		<th>Item Code</th>
+		</sec:authorize>
+		</sec:authorize>
 		<th>Name</th>
 		<th>Image</th>
 		<th>Description</th>
@@ -17,9 +21,13 @@
 	</tr>
 	<c:forEach items="${itemList}" var="item">
 		<tr>
+			<sec:authorize access="isAuthenticated()">
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<td><a href="item?itemId=${item.itemId}">${item.itemId}</a></td>
+			</sec:authorize>
+			</sec:authorize>
 			<td><a href="item?itemId=${item.itemId}">${item.name}</a></td>
-			<td align="center"><img src="/images/${item.thumbnail}" height="200"></td>
+			<td align="center"><a href="item?itemId=${item.itemId}"><img src="/images/${item.thumbnail}" height="200"></td>
 			<td>${item.description}</td>
 			<td>${item.price}</td>
 			<td>${item.costPrice}</td>

@@ -19,7 +19,7 @@
 	<c:forEach items="${itemList}" var="item">
 		<tr>
 			<td><a href="item?itemId=${item.itemId}">${item.name}</a></td>
-			<td align="center"><img src="/images/${item.thumbnail}" height="200"></td>
+			<td align="center"><a href="item?itemId=${item.itemId}"><img src="/images/${item.thumbnail}" height="200"></td>
 			<td>${item.description}</td>
 			<td>${item.price}</td>
 		</tr>

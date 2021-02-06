@@ -104,7 +104,7 @@
 	
 	// Update a review
 	$(document).on('click', '.btn-edit', function() {
-		let r_idx = $(this).attr('data-e_r_idx');
+		const r_idx = String($(this).attr('data-e_r_idx'));
 		let checkBtn = $(this);	
 		let tr = checkBtn.parent().parent();
 		let td = tr.children();
@@ -114,7 +114,7 @@
 		$.ajax({
 			method: "POST",
 			url: "/update-review",
-			data: {boardId: r_idx},
+			data: { boardId: r_idx },
 			dateType: "html"
 		})
 		.done(function(data) {

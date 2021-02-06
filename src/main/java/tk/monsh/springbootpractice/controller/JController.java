@@ -314,17 +314,16 @@ public class JController {
 	
 	@Secured({"ROLE_USER"})
 	@RequestMapping(value="/update-review")
-	public String updateReviewForm(Model model, Principal principal, Board board) {
+	public String updateReviewForm(Model model, Principal principal, int boardId) {
 		
-		System.out.println(board.getBoardId());
-		
-		
-		if(board.getUserId() != principal.getName()) {
-			return "no-authority";
+		Board board = boardService.getBoard(boardId);
+		if( !board.getUserId().equals(principal.getName()) ) {
+			return "/no-authority";
 		}
 		
 		model.addAttribute("board", board);
-		return "update-review";		
+		
+		return "/update-review";
 	}
 	
 	@Secured({"ROLE_USER"})
@@ -332,6 +331,9 @@ public class JController {
 	public String updateReview(Model model, Board board) {
 		
 		boardService.updateBoard(board);
+		List<Board> boardList = boardService.getBoards(board.getItemId());
+		
+		model.addAttribute("boardList", boardList);
 				
 		return "/review-list";
 	}
